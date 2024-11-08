@@ -1,0 +1,29 @@
+.app-nav{
+  border-top: var(--dark) 1px solid;
+  height: var(--navSize);
+  background-color: var(--light);
+  display: flex;
+  flex-direction: row;
+}
+
+.app-nav > a{
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center ;
+  text-decoration: none;
+  color: var(--main);
+
+  transition: all .35s ease;
+}
+
+
+.app-nav > a.active{
+  background-color: var(--main);
+  color: var(--dark);
+}
+
+
+.app-nav > a > i{
+  color: inherit;
+}

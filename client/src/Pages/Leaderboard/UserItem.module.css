@@ -1,0 +1,34 @@
+
+
+
+.UserItem{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  height: 40px;
+
+  background-color: var(--dark);
+  padding: var(--padding-2);
+}
+
+
+
+.username{
+  width: 100%;
+  color: inherit;
+
+}
+
+
+.pos{
+  width: 30px;
+  color: inherit;
+  font-family: lemonM;
+}
+
+
+.points{
+  color: inherit;
+}
+

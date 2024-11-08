@@ -1,0 +1,16 @@
+.app-header{
+  height: var(--headerSize);
+  background-color: var(--light);
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: var(--padding-2) ;
+  border-bottom: var(--dark) 1px solid;
+}
+
+
+.app-title{
+  font-size: 25px;
+  font-family: lemonM;
+  color: var(--main);
+}

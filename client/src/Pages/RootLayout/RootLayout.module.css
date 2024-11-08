@@ -1,0 +1,15 @@
+.root-layout{
+  width: 100dvw;
+  height: 100dvh;
+  background-color: var(--bg);
+
+  display: flex;
+  flex-direction: column;
+}
+
+
+.content{
+  flex: 1;
+  overflow-y: scroll;
+  height: fit-content;
+}
