@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./ItemMarker.module.css";
 import { Marker, Popup } from "react-leaflet";
 import L from "leaflet";
@@ -24,6 +24,9 @@ const starIcon = L.divIcon({
 });
 
 const ItemMarker = ({ marker, onCollect }) => {
+
+  const [ markerState, setMarkerState ] = useState(marker);
+
 	async function collectItem() {
 		try {
 			// console.log(marker);
@@ -31,6 +34,8 @@ const ItemMarker = ({ marker, onCollect }) => {
 			// console.log("Item collected");
 		} catch (error) {}
 	}
+
+	useEffect(() => { setMarkerState({...marker}) }, [marker]);
 
 	// console.log(marker);
 	return (
@@ -40,18 +45,15 @@ const ItemMarker = ({ marker, onCollect }) => {
 		>
 			<Popup>
 				<div className={styles.popupContent}>
-
-          <h3>{marker.name}</h3>
-          <p>{marker.description}</p>
-          <p>Point: {marker.point}</p>
+					<h3>{markerState.name}</h3>
+					<p>{markerState.description}</p>
+					<p>Point: {markerState.point}</p>
           
 
-
-
-					{!marker.iscollected && (
+					{!markerState.iscollected && (
 						<button
 							onClick={() => {
-                collectItem();
+								collectItem();
 								onCollect();
 							}}
 						>

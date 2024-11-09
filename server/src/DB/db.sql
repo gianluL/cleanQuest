@@ -4,15 +4,16 @@ CREATE TABLE "user"(
 	surname VARCHAR(100),
 	email VARCHAR(255) UNIQUE,
 	password TEXT,
-	point INT
+	point INT DEFAULT 0
 );
 
 CREATE TABLE event (
 	id serial PRIMARY KEY,
-	titel varchar(255),
+	title varchar(255),
 	"date" date,
 	description text,
-	location text,
+	lat FLOAT NOT NULL,
+  lng FLOAT NOT NULL,
 	participantPoint int,
 	img text,
 	"user" int REFERENCES "user"("id")

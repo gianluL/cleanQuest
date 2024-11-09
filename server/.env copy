@@ -1,0 +1,9 @@
+PG_HOST=127.0.0.1
+PG_USER=postgres
+PG_PASS=f7f7
+PG_DATABASE=cleanquest
+PG_PORT=5432
+
+
+SECRET_KEY=secret
+SERVER_PORT=3001

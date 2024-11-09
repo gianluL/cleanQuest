@@ -1,0 +1,5 @@
+.EventModal {
+  display: flex;
+  flex-direction: column;
+  gap: var(--padding-1);
+}

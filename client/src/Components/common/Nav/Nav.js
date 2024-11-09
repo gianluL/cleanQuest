@@ -12,12 +12,12 @@ const Nav = () => {
 			<NavLink to={"/"} className={isCurrentLocation}>
 				<i class="fa-solid fa-map"></i>
 			</NavLink>
-			<NavLink to={"/page-2"} className={isCurrentLocation}>
+			<NavLink to={"/Leaderboard"} className={isCurrentLocation}>
 				<i className="fa-solid fa-crown"></i>
 			</NavLink>
-			<NavLink to={"/page-3"} className={isCurrentLocation}>
+			{/* <NavLink to={"/Events"} className={isCurrentLocation}>
 				<i className="fa-solid fa-people-group"></i>
-			</NavLink>
+			</NavLink> */}
 		</nav>
 	);
 };

@@ -16,6 +16,8 @@ const salt = 10;
 router.post("/login", async (req, res) => {
 	const { email, password } = req.body;
 
+  console.log(req.body);
+
 
 	try {
 		const users = await db.query(`

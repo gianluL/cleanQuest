@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import {
 	MapContainer,
 	TileLayer,
@@ -11,10 +11,13 @@ import "leaflet/dist/leaflet.css";
 
 import L from "leaflet";
 import ItemMarker from "../../Components/common/ItemMarker";
-import Overlay from "../../Components/common/Overlay/Overlay";
 import ItemModal from "../../Components/ItemModal/ItemModal";
+import EventModal from "../../Components/EventModal/EventModal";
 import styles from "./MapPage.module.css";
 import axios from "axios";
+import EventMarker from "../../Components/common/EventMarker";
+// import EventModal from "../../Components/EventModal/EventModal";
+import { RootLayoutContext }  from "../RootLayout/RootLayout";
 
 const user = L.divIcon({
 	className: "custom-marker",
@@ -25,32 +28,49 @@ const user = L.divIcon({
 
 const MapPage = () => {
 	const [position, setPosition] = useState(null);
-  const [address, setAddress] = useState(null);
-	const [markers, setMarkers] = useState([]);
-	const [createMarkerPos, setCreateMarkerPos] = useState(null);
+	const [address, setAddress] = useState(null);
+	const [itemMarkers, setItemMarkers] = useState([]);
+	const [eventMarkers, setEventMarkers] = useState([]);
+	const [reportItemPos, setReportItemPos] = useState(null);
+	const [addEventPos, setAddEventPos] = useState(null);
+	const [isAddingEvent, setIsAddingEvent] = useState(false);
+  
 
-  console.log(address);
+	const { setTitle } = useContext(RootLayoutContext);
 
-  const fetchAddress = async (lat, lng) => {
-    const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`);
-    const data = await response.json();
-    setAddress(data.display_name || "Address not found");
-  };
+	useEffect(() => {
+		setTitle("Treasure Map");
+	}, []);
+
+
+  const [filter, setFilter] = useState(0);
 
 	async function reportItem(item) {
 		try {
 			await axios.post("/report-item", item);
-			// console.log("Item reported");
-      fetchItems();
+			fetchItems();
 		} catch (error) {}
 		console.log(item);
+	}
+
+
+
+	function handleReportItem(lat, lng) {
+		setReportItemPos({ lat, lng });
+	}
+
+	function handleAddEvent(lat, lng) {
+		setAddEventPos({ lat, lng });
 	}
 
 	// Handle click event on the map
 	const handleMapClick = (e) => {
 		const { lat, lng } = e.latlng;
-    fetchAddress(lat, lng);
-		setCreateMarkerPos({ lat, lng });
+		if (isAddingEvent) {
+			handleAddEvent(lat, lng);
+		} else {
+			handleReportItem(lat, lng);
+		}
 	};
 
 	// Custom hook to handle map events like click
@@ -62,9 +82,9 @@ const MapPage = () => {
 	}
 
 	useEffect(() => {
-		setInterval(() => {
-			// console.log(position)
+		const intervalId = setInterval(() => {
 			try {
+				// console.log(position);
 				navigator.geolocation.getCurrentPosition(
 					(position) => {
 						setPosition([position.coords.latitude, position.coords.longitude]);
@@ -73,32 +93,101 @@ const MapPage = () => {
 				);
 			} catch (error) {}
 		}, 2000);
+
+		return () => {
+			clearInterval(intervalId);
+			console.log("Interval cleared");
+		};
 	}, []);
+
+	
+
+
+	async function fetchEvents() {
+		try {
+			console.log(axios.defaults.baseURL);
+			const res = await axios.get("/events");
+      console.log(res.data.events);
+			setEventMarkers(res.data.events);
+		} catch (error) {
+
+		}
+	}
 
 	async function fetchItems() {
 		try {
 			console.log(axios.defaults.baseURL);
 			const res = await axios.get("/items");
-			setMarkers(res.data.items);
-		} catch (error) {
-			// console.error(error.response.data.error);
-		}
+			setItemMarkers(res.data.items);
+		} catch (error) {}
 	}
 
 	useEffect(() => {
 		fetchItems();
+    fetchEvents();
 	}, []);
+
+
+  function handleFilter(e) {
+    setFilter(e.target.id);
+
+    switch(e.target.id){
+      case "0":
+        fetchItems();
+        fetchEvents();
+        break;
+      case "1":
+        fetchEvents();
+        // delete item markers
+        setItemMarkers([]);
+
+        break;
+      case "2":
+        fetchItems();
+
+        // delete event markers
+        setEventMarkers([]);
+        break;
+    }
+  }
 
 	return (
 		<div className={styles.MapPage}>
-			{createMarkerPos != null && (
+			<div className={styles.filterContainer}>
+				<button onClick={handleFilter} id="0"  className={filter != 0 ? "border-btn" : undefined }>All</button>
+				<button onClick={handleFilter} id="1" className={filter != 1 ? "border-btn" : undefined }>Events</button>
+				<button onClick={handleFilter} id="2" className={filter != 2 ? "border-btn" : undefined }>Items</button>
+			</div>
+
+			<div className={styles.cmdContainer}>
+				<button
+					className={isAddingEvent == true ? styles.isActive : "border-btn"}
+					onClick={() => {
+						setIsAddingEvent(!isAddingEvent);
+					}}
+				>
+					{isAddingEvent ? "Add Event" : "Add Item"}
+				</button>
+			</div>
+
+			{reportItemPos != null && (
 				<ItemModal
 					onCancel={() => {
-						setCreateMarkerPos(null);
+						setReportItemPos(null);
 					}}
 					onReport={reportItem}
-					pos={createMarkerPos}
+					pos={reportItemPos}
 				></ItemModal>
+			)}
+
+			{addEventPos != null && (
+				<EventModal
+					onCancel={() => {
+						setAddEventPos(null);
+					}}
+          onAdd={fetchEvents}
+					pos={addEventPos}
+				></EventModal>
 			)}
 
 			{position && (
@@ -116,14 +205,19 @@ const MapPage = () => {
   OpenStreetMap</a> contributors'
 					/>
 
-					{position && (
-						<Marker position={position} icon={user}>
-							<Popup>You are here</Popup>
-						</Marker>
-					)}
+					{position && <Marker position={position} icon={user}></Marker>}
 
-					{markers.map((marker) => (
-						<ItemMarker key={marker.id} onCollect={fetchItems}  marker={marker}></ItemMarker>
+					{itemMarkers.map((marker) => (
+						<ItemMarker
+							key={marker.id}
+							onCollect={fetchItems}
+							marker={marker}
+						></ItemMarker>
+					))}
+          
+          
+          {eventMarkers.map((marker) => (
+						<EventMarker marker={marker}></EventMarker>
 					))}
 				</MapContainer>
 			)}
