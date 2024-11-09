@@ -8,10 +8,14 @@ import { useCookies } from "react-cookie";
 const RootLayoutContext = createContext();
 
 const RootLayout = () => {
-	const [title, setTitle] = useState();
-	const navigate = useNavigate();
-	const [cookies] = useCookies(null);
-	useEffect(() => {}, []);
+  const [cookies ] = useCookies(null);
+  const [title, setTitle] = useState("Home");
+  const navigate = useNavigate();
+
+  useEffect(()=>{
+    if(cookies["AuthToken"] == undefined)
+      navigate("/login")
+  }, [])
 	return (
 		<RootLayoutContext.Provider value={{ title, setTitle }}>
 			<div className={styles["root-layout"]}>

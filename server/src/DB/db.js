@@ -1,15 +1,12 @@
 import pg from "pg";
+import dotenv from "dotenv";
+dotenv.config();
 
-const env = process.env;
-
-const client = new pg.Client({
-	host: env.DB_HOST,
-	user: env.DB_USER,
-	password: env.DB_PASSWORD,
-	port: env.DB_PORT,
-	database: env.DB_DATABASE,
+const pool = new pg.Pool({
+  host: process.env.PG_HOST,
+  user: process.env.PG_USER,
+  password: process.env.PG_PASS,
+  database: process.env.PG_DATABASE,
 });
 
-
-
-export default client;
+export { pool };

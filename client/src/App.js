@@ -5,11 +5,11 @@ import {
 	RouterProvider,
 	useNavigate,
 } from "react-router-dom";
-import {RootLayout} from "./Pages/RootLayout/RootLayout";
+import { RootLayout } from "./Pages/RootLayout/RootLayout";
 import { createContext, useEffect } from "react";
-import Page2 from "./Pages/Page2";
 import LeaderboardPage from "./Pages/Leaderboard/Leaderboard";
-import WeeklyList from "./Pages/Leaderboard/Weekly";
+import MapPage from "./Pages/MapPage/MapPage";
+import AuthPage from "./Pages/AuthPage/AuthPage";
 
 const AppContext = createContext();
 
@@ -19,17 +19,13 @@ const router = createBrowserRouter([
 		element: <RootLayout />,
 		errorElement: "",
 		children: [
-      {
+			{
 				path: "",
-				element: <LeaderboardPage></LeaderboardPage>,
-        children: [
-          {path: 'weekly', element: <WeeklyList></WeeklyList>},
-          {path: 'Monthly', element: <h1>Monthly</h1>},
-        ]
+				element: <MapPage></MapPage>,
 			},
 			{
 				path: "page-2",
-				element: <Page2></Page2>,
+				element: <LeaderboardPage></LeaderboardPage>,
 			},
 			{
 				path: "page-3",
@@ -37,12 +33,14 @@ const router = createBrowserRouter([
 			},
 		],
 	},
+
+	{ path: "/login", element: <AuthPage></AuthPage>, errorElement: <></> },
 ]);
 
 function App() {
 	const [cookies] = useCookies(null);
 
-	axios.defaults.baseURL = process.env.REACT_APP_SERVER_URL;
+	axios.defaults.baseURL = 'http://localhost:3001';
 	axios.defaults.headers = {
 		Authorization: cookies["AuthToken"],
 		"Content-Type": "application/json",
@@ -56,7 +54,3 @@ function App() {
 }
 
 export default App;
-
-// <i class="fa-solid fa-crown"></i>
-// <i class="fa-solid fa-people-group"></i>
-// 

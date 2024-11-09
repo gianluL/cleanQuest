@@ -10,10 +10,10 @@ const Nav = () => {
 	return (
 		<nav className={styles["app-nav"]}>
 			<NavLink to={"/"} className={isCurrentLocation}>
-				<i className="fa-solid fa-crown"></i>
+				<i class="fa-solid fa-map"></i>
 			</NavLink>
 			<NavLink to={"/page-2"} className={isCurrentLocation}>
-				<i className="fa-solid fa-trash"></i>
+				<i className="fa-solid fa-crown"></i>
 			</NavLink>
 			<NavLink to={"/page-3"} className={isCurrentLocation}>
 				<i className="fa-solid fa-people-group"></i>

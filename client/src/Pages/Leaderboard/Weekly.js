@@ -4,6 +4,8 @@ import UserItem from "./UserItem";
 
 
 const WeeklyList = () => {
+
+
 	return (
 		<ul className="weekly" >
       <UserItem></UserItem>

@@ -1,0 +1,14 @@
+.labeled-input{
+  display: flex;
+  flex-direction: column;
+}
+
+
+.labeled-input input{
+  padding: var(--padding-2) var(--padding-1) ;
+  border: none;
+  /* border-radius: 5px; */
+  /* margin-top: 5px; */
+
+  background-color: var(--dark);
+}

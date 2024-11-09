@@ -1,0 +1,40 @@
+.ItemIcon{
+  color: var(--main);
+}
+
+
+.popup{
+  display: flex;
+  flex-direction: column;
+
+}
+
+
+
+.popupContent{
+  display: flex;
+  flex-direction: column;
+  /* gap: var(--padding-2); */
+  padding: var(--padding-2);
+  background-color: var(--light);
+  border-radius: var(--borderRadius);
+  box-shadow: var(--boxShadow);
+}
+
+.popupContent h3{
+  font-family: 'lemonM';
+  font-size: 16px;
+  color: var(--main);
+}
+
+.popupContent p{
+  font-family: 'quick';
+  font-size: 14px;
+  color: var(--white);
+  margin: 0;
+}
+
+.popupContent button{
+  margin-top: 10px;
+  padding: var(--padding-1) var(--padding-2);
+}

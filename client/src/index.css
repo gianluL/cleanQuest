@@ -1,13 +1,19 @@
 @font-face {
+  font-family: 'lemonM';
+  src: url(./assets/fonts/LEMONMILK-Bold.otf);
+}
+
+
+@font-face {
   font-family: 'quick';
   src: url(./assets/fonts/Quicksand-Regular.ttf);
 }
 
 @font-face {
   font-family: 'lemonM';
-  src: url(./assets/fonts/LEMONMILK-Bold.otf);
+  font-family: 'tommy';
+  src: url(./assets/fonts/MADE\ TOMMY\ Bold_PERSONAL\ USE.otf);
 }
-
 
 * {
   padding: 0;
@@ -16,7 +22,6 @@
   color: var(--white);
   font-family: 'quick';
 }
-
 
 :root {
   
@@ -33,65 +38,288 @@
   --light: #013c49;
   --main: #b3cf12;
 
+
 }
 
 
+
+#root {
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--bg);
+}
 
 
 body {
   background-color: var(--bg);
   position: relative;
   display: flex;
-  /* justify-content: center; */
+  justify-content: center;
 }
 
-
-.nav-container{
-  width: 100%;
-  height: 35px;
+.app {
+  width: 100vw;
+  min-height: 100vh;
   display: flex;
-}
-
-.nav-container a{
-  flex: 1;
-  background-color: var(--light);
-  font-family: lemonM;
-  display:  flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
+  background: var(--bg);
+
+  overflow-x: hidden;
+}
+
+
+
+
+.lemon-font {
+  font-family: 'lemonM';
+}
+
+button {
+  height: fit-content;
+  width: fit-content;
+  background-color: var(--main);
+  color: var(--dark);
+  border: var(--main) 1px solid;
+  /* border-radius: var(--borderRadius); */
+  font-family: "quick";
+  padding: var(--padding-1) var(--padding-2);
+
+  transition: all .35s ease-out;
+}
+
+button.square-btn {
+  width: 0;
+  height: 0;
+  padding: 12px;
+  display: flex;
   justify-content: center;
-  text-decoration: none;
+  align-items: center;
+}
+
+button.square-btn-2 {
+  width: 0;
+  height: 0;
+  padding: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+i {
+  color: inherit;
+}
+
+
+
+
+.app-main {
+  width: 100%;
+  max-width: 450px;
+  height: 100dvh;
+  padding: calc(var(--headerSize) + 2px) 0 calc(var(--navSize) + 2px) 0;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  /* margin: var(--headerSize) 0; */
+}
+
+
+.app-main::-webkit-scrollbar {
+  width: 0;
+}
+
+.categories-view {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 25px;
+  height: calc(100dvh - var(--headerSize)*2);
+  height: 100%;
+  gap: var(--padding-2);
+}
+
+.categories-view>.front-back-btn {
+  position: fixed;
+  bottom: calc(var(--navSize) + var(--padding-2));
+  right: var(--padding-2);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 0;
+  height: 0;
+  padding: 15px;
+
+  font-size: 16px;
+}
+
+.view {
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  gap: var(--padding-2);
+  /* padding: var(--padding-2); */
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 3px;
+}
+
+
+
+.red-btn {
+  background: var(--red);
+  color: var(--white);
+  border: var(--red) 1px solid;
+}
+
+
+.red-btn i {
+  color: var(--white) !important;
+}
+
+
+.add-btn {
+  width: 100%;
+  font-family: 'lemonM';
+  font-size: 20px;
+}
+
+.page-title-header {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.page-title-header h1 {
+  font-family: 'lemonM';
+  color: var(--main);
+}
+
+input {
+  border: none;
+  color: var(--white);
+  /* border-radius: var(--borderRadius); */
+  background-color: var(--dark);
+  padding: var(--padding-1) var(--padding-2);
+  height: fit-content;
 
 }
 
 
-.nav-container a.active{
-  background-color: var(--main);
-  color: var(--dark);
+.no-padding {
+  padding: 0;
+}
+
+
+.no-margin {
+  margin: 0;
+}
+
+
+textarea {
+  background-color: var(--dark);
+
+  padding: var(--padding-2);
+
+  border: none;
+  /* border-radius: var(--borderRadius); */
+
+  /* white-space: pre-line; */
+}
+
+
+.body-svg path {
+  transition: all .35s ease-out;
+}
+
+
+button.transparent-btn {
+  background-color: transparent;
+  border-color: transparent;
+  color: var(--main);
+}
+
+i.fa-caret-down,
+i.fa-caret-up {
+  font-size: 16px;
+}
+
+
+button.red {
+  color: red;
+}
+
+
+button.white {
+  color: var(--white);
+}
+
+*.no-padding {
+  padding: 0;
+}
+
+.border-btn {
+  background-color: transparent;
+  border: 1px solid var(--main);
+  color: white;
+  color: var(--white);
+}
+
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: lemonM;
 }
 
-
-.weekly{
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
+.red-border{
+  border-color: red;
 }
 
 
-.weekly li:nth-child(1){
-  background-color: #b09217;
-  color: var(--dark);
+.font-lemonM{
+  font-family: lemonM;
+}
+
+.font-quick{
+  font-family: quick;
+}
+
+button.w-full{
+  width: 100%;
+}
+
+.leaflet-popup-content{
+  background-color: var(--light) !important;
+  border-radius: 3px !important;
+  margin: 0 !important;
+  min-width: 200px;
+}
+
+.leaflet-popup-content-wrapper{
+  background-color: var(--light) !important;
+  border-radius: 3px !important;
+  padding: 0;
+}
+
+.leaflet-popup-tip{
+  background-color: var(--light) !important;
 }
 
 
-.weekly li:nth-child(2){
-  background-color: #777c7c;
-  color: var(--dark);
-}
-
-
-.weekly li:nth-child(3){
-  background-color: #a36310;
-  color: var(--dark);
+.leaflet-popup{
+  margin-bottom: 30px !important;
 }

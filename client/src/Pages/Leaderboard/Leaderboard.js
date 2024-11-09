@@ -1,23 +1,28 @@
 import React, { useContext, useEffect } from "react";
 import { RootLayoutContext } from "../RootLayout/RootLayout";
 import { NavLink, Outlet } from "react-router-dom";
+import UserItem from "./UserItem";
 
 const LeaderboardPage = () => {
 	const { setTitle } = useContext(RootLayoutContext);
+	const [leaderboard, setLeaderboard] = React.useState([]);
+
 	useEffect(() => {
 		setTitle("Leaderboard");
 	}, []);
 
-  function isCurrentLocation({ isActive }) {
+	function isCurrentLocation({ isActive }) {
 		return isActive ? "active" : undefined;
 	}
 	return (
 		<div className="page">
-			<div className="nav-container">
-				<NavLink className={isCurrentLocation} to={'weekly'} >Weekly</NavLink>
-				<NavLink className={isCurrentLocation} to={'monthly'} >Monthly</NavLink>
-			</div>
-      <Outlet></Outlet>
+			<h1>Bozen</h1>
+			<ul className="weekly">
+				<UserItem></UserItem>
+				<UserItem></UserItem>
+				<UserItem></UserItem>
+				<UserItem></UserItem>
+			</ul>
 		</div>
 	);
 };

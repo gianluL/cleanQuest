@@ -1,0 +1,15 @@
+.LabeledTextarea{
+    display: flex;
+    flex-direction: column;
+}
+
+
+.LabeledTextarea textarea{
+    /* margin-top: 5px; */
+    padding: var(--padding-1);
+    /* border-radius: 5px; */
+    border: var(--dark) 1px solid;
+    background-color: var(--dark);
+    resize: none;
+    height: 200px;
+}
